@@ -1,0 +1,108 @@
+const MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connection URL
+const url = &#39;mongodb://localhost:27017&#39;;
+
+// Database Name
+const dbName = &#39;mydatabase&#39;;
+
+// Create a new MongoClient
+const client = new MongoClient(url, { useUnifiedTopology: true });
+
+// Connect to the MongoDB server
+client.connect((err) =&gt; {
+if (err) {
+
+return;
+}
+
+console.log(&#39;Connected to MongoDB
+server&#39;);
+const db = client.db(dbName);
+
+// Perform CRUD operations here
+
+// Close the MongoDB connection
+client.close();
+})
+;
+CRUD
+OPERTION:
+// Get the collection
+const collection = db.collection(&#39;users&#39;);
+
+// Create a new document
+const user = {
+name: &#39;John
+Doe&#39;,
+email:
+&#39;john@example.com&#39;,
+}
+;
+// Insert the document
+collection.insertOne(user, (err, result) =&gt;
+{
+if (err) {
+console.error(&#39;Error inserting document:&#39;,
+err);
+console.error(&#39;Error connecting to MongoDB:&#39;,
+err);
+
+}
+
+console.log(&#39;Document inserted:&#39;,
+result.insertedId);
+})
+;
+READ
+(FIND):
+// Get the collection
+const collection = db.collection(&#39;users&#39;);
+
+// Find documents
+collection.find({}).toArray((err, documents) =&gt; {
+if (err) {
+console.error(&#39;Error retrieving documents:&#39;,
+err);
+return;
+}
+
+console.log(&#39;Documents:&#39;,
+documents);
+})
+;
+UPDATE:
+// Get the collection
+const collection = db.collection(&#39;users&#39;);
+
+// Update a document
+const filter = { name: &#39;John Doe&#39; };
+const update = { $set: { email: &#39;newemail@example.com&#39; }
+};
+collection.updateOne(filter, update, (err, result) =&gt; {
+return;
+
+console.error(&#39;Error updating document:&#39;,
+err);
+return;
+}
+
+console.log(&#39;Document updated:&#39;, result.modifiedCount);
+})
+;
+DELETE:
+// Get the collection
+const collection = db.collection(&#39;users&#39;);
+
+// Delete a document
+const filter = { name: &#39;John Doe&#39; };
+
+collection.deleteOne(filter, (err, result) =&gt; {
+if (err) {
+console.error(&#39;Error deleting document:&#39;,
+err);
+return;
+}
+
+console.log(&#39;Document deleted:&#39;, result.deletedCount);
+})
